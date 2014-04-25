@@ -394,12 +394,12 @@ package managers
         {
             var isMaking:Boolean = false;
 
-            if(checkVertical(rowPos,colPos,depth-1,xo_cur_player)) {
+            if(checkVertical(rowPos,colPos,depth-1,xo_cur_player,true)) {
                 trace("Making Vertical yes");
                 isMaking = true;
             }
 
-            if(checkHorizontal(rowPos,colPos,depth-1,xo_cur_player)) {
+            if(checkHorizontal(rowPos,colPos,depth-1,xo_cur_player,true)) {
                 trace("Making Horizontal yes");
                 isMaking = true;
             }
@@ -419,7 +419,7 @@ package managers
 
         //checking vertically if we are blocking given amount of squares of the opponent
         //checking vertically if we are making a given amount of squares
-		private function checkVertical(rowPos:int,colPos:int, depth:int, xo:int):Boolean
+		private function checkVertical(rowPos:int,colPos:int, depth:int, xo:int, own:Boolean = false):Boolean
         {
             //variables for start and end positions
             var rowStartPos:int;
@@ -435,6 +435,9 @@ package managers
 
             for(var i:int = rowStartPos; i <= rowEndPos; i++)
             {
+                if(own && i == rowPos) {
+                    continue;
+                }
                 if(grid[i][colPos].getXO() == xo)
                 {
                     foundRows++;
@@ -456,7 +459,7 @@ package managers
 
         //checking horizontally if we are blocking given amount of squares of the opponent
         //checking horizontally if we are making given amount of squares
-        private function checkHorizontal(rowPos:int, colPos:int, depth:int, xo:int):Boolean
+        private function checkHorizontal(rowPos:int, colPos:int, depth:int, xo:int, own:Boolean = false):Boolean
         {
             //variables for start and end positions
             var colStartPos:int;
@@ -472,6 +475,9 @@ package managers
 
             for(var i:int = colStartPos; i <= colEndPos; i++)
             {
+                if(own && i == colPos) {
+                    continue;
+                }
                 if(grid[rowPos][i].getXO() == xo)
                 {
                     foundRows++;
