@@ -366,22 +366,22 @@ package managers
 		{
 		    var isBlocking:Boolean = false;
 
-            if(checkVertical(rowPos,colPos,depth,xo_opponent)) {
+            if(checkVerticalBlock(rowPos,colPos,depth,xo_opponent)) {
                 trace("Block Vertical yes");
                 isBlocking = true;
             }
 
-            if(checkHorizontal(rowPos,colPos,depth,xo_opponent)) {
+            if(checkHorizontalBlock(rowPos,colPos,depth,xo_opponent)) {
                 trace("Block Horizontal yes");
                 isBlocking = true;
             }
 
-            if(checkDiagonalLR(rowPos,colPos,depth,xo_opponent)) {
+            if(checkDiagonalLRBlock(rowPos,colPos,depth,xo_opponent)) {
                 trace("Block Diagonal LR yes");
                 isBlocking = true;
             }
 
-            if(checkDiagonalRL(rowPos,colPos,depth,xo_opponent)) {
+            if(checkDiagonalRLBlock(rowPos,colPos,depth,xo_opponent)) {
                 trace("Block Diagonal RL yes");
                 isBlocking = true;
             }
@@ -394,22 +394,22 @@ package managers
         {
             var isMaking:Boolean = false;
 
-            if(checkVertical(rowPos,colPos,depth-1,xo_cur_player,true)) {
+            if(checkVerticalMake(rowPos,colPos,depth-1,xo_cur_player)) {
                 trace("Making Vertical yes");
                 isMaking = true;
             }
 
-            if(checkHorizontal(rowPos,colPos,depth-1,xo_cur_player,true)) {
+            if(checkHorizontalMake(rowPos,colPos,depth-1,xo_cur_player)) {
                 trace("Making Horizontal yes");
                 isMaking = true;
             }
 
-            if(checkDiagonalLR(rowPos,colPos,depth-1,xo_cur_player)) {
+            if(checkDiagonalLRMake(rowPos,colPos,depth-1,xo_cur_player)) {
                 trace("Making Diagonal LR yes");
                 isMaking = true;
             }
 
-            if(checkDiagonalRL(rowPos,colPos,depth-1,xo_cur_player)) {
+            if(checkDiagonalRLMake(rowPos,colPos,depth-1,xo_cur_player)) {
                 trace("Making Diagonal RL yes");
                 isMaking = true;
             }
@@ -417,9 +417,246 @@ package managers
             return isMaking;
         }
 
-        //checking vertically if we are blocking given amount of squares of the opponent
         //checking vertically if we are making a given amount of squares
-		private function checkVertical(rowPos:int,colPos:int, depth:int, xo:int, own:Boolean = false):Boolean
+		private function checkVerticalMake(rowPos:int,colPos:int, depth:int, xo:int):Boolean
+        {
+            //variables for start and end positions
+            var rowStartPos:int;
+            var rowEndPos:int;
+            var isMaking:Boolean = false;
+            var foundRows:int = 0;
+
+            //determining the start and end positions
+            rowStartPos = rowPos - depth;
+            if(rowStartPos < 0) rowStartPos = 0;
+            rowEndPos = rowPos + depth;
+            if(rowEndPos > 18) rowEndPos = 18;
+
+            for(var i:int = rowStartPos; i <= rowEndPos; i++)
+            {
+                if(i == rowPos) {
+                    continue;
+                }
+                if(grid[i][colPos].getXO() == xo)
+                {
+                    foundRows++;
+                }
+                else
+                {
+                    foundRows = 0;
+                }
+
+                if(foundRows == depth)
+                {
+                    isMaking = true;
+                    break;
+                }
+            }
+
+            return isMaking;
+        }
+
+        //checking horizontally if we are making given amount of squares
+        private function checkHorizontalMake(rowPos:int, colPos:int, depth:int, xo:int):Boolean
+        {
+            //variables for start and end positions
+            var colStartPos:int;
+            var colEndPos:int;
+            var isMaking:Boolean = false;
+            var foundRows:int = 0;
+
+            //determining the start and end positions
+            colStartPos = colPos - depth;
+            if(colStartPos < 0) colStartPos = 0;
+            colEndPos = colPos + depth;
+            if(colEndPos > 18) colEndPos = 18;
+
+            for(var i:int = colStartPos; i <= colEndPos; i++)
+            {
+                if(i == colPos) {
+                    continue;
+                }
+                if(grid[rowPos][i].getXO() == xo)
+                {
+                    foundRows++;
+                }
+                else
+                {
+                    foundRows = 0;
+                }
+
+                if(foundRows == depth)
+                {
+                    isMaking = true;
+                    break;
+                }
+            }
+
+            return isMaking;
+        }
+
+        //checking in diagonal Left To Right if we are making given amount of squares
+        private function checkDiagonalLRMake(rowPos:int, colPos:int, depth:int, xo:int):Boolean
+        {
+            //variables for the start and end positions
+            var colStartPos:int;
+            var colEndPos:int;
+            var rowStartPos:int;
+            var rowEndPos:int;
+            var isMaking:Boolean = false;
+            var foundRows:int = 0;
+
+            //determining the start and end positions
+            colStartPos = colPos - depth;
+            rowStartPos = rowPos - depth;
+            if(colStartPos < rowStartPos && colStartPos < 0)
+            {
+                rowStartPos = rowStartPos - colStartPos;
+                colStartPos = 0;
+            }
+
+            if(rowStartPos < colStartPos && rowStartPos < 0)
+            {
+                colStartPos = colStartPos - rowStartPos;
+                rowStartPos = 0;
+            }
+
+            if(colStartPos == rowStartPos && colStartPos < 0) {
+                colStartPos = 0;
+                rowStartPos = 0;
+            }
+
+            colEndPos = colPos + depth;
+            rowEndPos = rowPos + depth;
+            if(colEndPos > rowEndPos && colEndPos > 18)
+            {
+                rowEndPos = rowEndPos - (colEndPos - 18);
+                colEndPos = 18;
+            }
+
+            if(rowEndPos > colEndPos && rowEndPos > 18)
+            {
+                colEndPos = colEndPos - (rowEndPos - 18);
+                rowEndPos = 18;
+            }
+
+            if(rowEndPos == colEndPos && rowEndPos > 18)
+            {
+                rowEndPos = 18;
+                colEndPos = 18;
+            }
+
+            for(var i:int=rowStartPos, j:int=colStartPos; i<=rowEndPos && j<=colEndPos; i++, j++)
+            {
+                if(i == rowPos && j == colPos) {
+                    continue;
+                }
+                if(grid[i][j].getXO() == xo)
+                {
+                    foundRows++;
+                }
+                else
+                {
+                    foundRows = 0;
+                }
+
+                if(foundRows == depth)
+                {
+                    isMaking = true;
+                    break;
+                }
+            }
+            return isMaking;
+        }
+
+        //checking in diagonal Right To Left if we are making given amount of squares
+        private function checkDiagonalRLMake(rowPos:int, colPos:int, depth:int, xo:int):Boolean
+        {
+            //variables for the start and end positions
+            var colStartPos:int;
+            var colEndPos:int;
+            var rowStartPos:int;
+            var rowEndPos:int;
+            var marginRow:int;
+            var marginCol:int;
+            var isMaking:Boolean = false;
+            var foundRows:int = 0;
+
+            //determining the start and end positions
+            colStartPos = colPos + depth;
+            rowStartPos = rowPos - depth;
+            if(colStartPos > 18 || rowStartPos < 0)
+            {
+                marginRow = 0 - rowStartPos;
+                marginCol = colStartPos - 18;
+
+                if(marginCol > marginRow)
+                {
+                    rowStartPos = (colStartPos - 18) + rowStartPos;
+                    colStartPos = 18;
+                }
+                else if(marginCol == marginRow)
+                {
+                    rowStartPos = 0;
+                    colStartPos = 18;
+                }
+                else if(marginRow > marginCol)
+                {
+                    colStartPos = colStartPos - marginRow;
+                    rowStartPos = 0;
+                }
+
+            }
+
+            colEndPos = colPos - depth;
+            rowEndPos = rowPos + depth;
+            if(rowEndPos > 18 || colEndPos < 0)
+            {
+                marginRow = rowEndPos - 18;
+                marginCol = 0 - colEndPos;
+
+                if(marginRow > marginCol)
+                {
+                    colEndPos = colEndPos + marginRow;
+                    rowEndPos = 18;
+                }
+                else if(marginRow == marginCol)
+                {
+                    rowEndPos = 18;
+                    colEndPos = 0;
+                }
+                else if(marginCol > marginRow)
+                {
+                    rowEndPos = rowEndPos - marginCol;
+                    colEndPos = 0;
+                }
+            }
+
+            for(var i:int=rowStartPos, j:int=colStartPos; i<=rowEndPos && j>=colEndPos; i++, j--)
+            {
+                if(i == rowPos && j == colPos) {
+                    continue;
+                }
+                if(grid[i][j].getXO() == xo)
+                {
+                    foundRows++;
+                }
+                else
+                {
+                    foundRows = 0;
+                }
+
+                if(foundRows == depth)
+                {
+                    isMaking = true;
+                    break;
+                }
+            }
+            return isMaking;
+        }
+
+        //checking vertically if we are blocking given amount of squares of the opponent
+        private function checkVerticalBlock(rowPos:int,colPos:int, depth:int, xo:int):Boolean
         {
             //variables for start and end positions
             var rowStartPos:int;
@@ -435,7 +672,7 @@ package managers
 
             for(var i:int = rowStartPos; i <= rowEndPos; i++)
             {
-                if(own && i == rowPos) {
+                if(i == rowPos) {
                     continue;
                 }
                 if(grid[i][colPos].getXO() == xo)
@@ -458,8 +695,7 @@ package managers
         }
 
         //checking horizontally if we are blocking given amount of squares of the opponent
-        //checking horizontally if we are making given amount of squares
-        private function checkHorizontal(rowPos:int, colPos:int, depth:int, xo:int, own:Boolean = false):Boolean
+        private function checkHorizontalBlock(rowPos:int, colPos:int, depth:int, xo:int):Boolean
         {
             //variables for start and end positions
             var colStartPos:int;
@@ -475,7 +711,7 @@ package managers
 
             for(var i:int = colStartPos; i <= colEndPos; i++)
             {
-                if(own && i == colPos) {
+                if(i == colPos) {
                     continue;
                 }
                 if(grid[rowPos][i].getXO() == xo)
@@ -498,8 +734,7 @@ package managers
         }
 
         //checking in diagonal Left To Right if we are blocking given amount of squares of the opponent
-        //checking in diagonal Left To Right if we are making given amount of squares
-        private function checkDiagonalLR(rowPos:int, colPos:int, depth:int, xo:int):Boolean
+        private function checkDiagonalLRBlock(rowPos:int, colPos:int, depth:int, xo:int):Boolean
         {
             //variables for the start and end positions
             var colStartPos:int;
@@ -551,6 +786,9 @@ package managers
 
             for(var i:int=rowStartPos, j:int=colStartPos; i<=rowEndPos && j<=colEndPos; i++, j++)
             {
+                if(i == rowPos && j == colPos) {
+                    continue;
+                }
                 if(grid[i][j].getXO() == xo)
                 {
                     foundRows++;
@@ -570,8 +808,7 @@ package managers
         }
 
         //checking in diagonal Right To Left if we are blocking given amount of squares of the opponent
-        //checking in diagonal Right To Left if we are making given amount of squares
-        private function checkDiagonalRL(rowPos:int, colPos:int, depth:int, xo:int):Boolean
+        private function checkDiagonalRLBlock(rowPos:int, colPos:int, depth:int, xo:int):Boolean
         {
             //variables for the start and end positions
             var colStartPos:int;
@@ -635,6 +872,9 @@ package managers
 
             for(var i:int=rowStartPos, j:int=colStartPos; i<=rowEndPos && j>=colEndPos; i++, j--)
             {
+                if(i == rowPos && j == colPos) {
+                    continue;
+                }
                 if(grid[i][j].getXO() == xo)
                 {
                     foundRows++;
