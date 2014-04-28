@@ -22,6 +22,15 @@ package core
 		*/
 		//constants for the logic
 
+        /*
+        Логика версия 1.1
+        1 - make 1
+        2 - block op.1 : 1 block,
+        3 - b1:2
+        4 - b1:3
+
+         */
+
         public static const MAKE_1:int = 1;
 		public static const BLOCK_OPPONENT_1:int = 2;
         public static const MAKE_2:int = 3;
