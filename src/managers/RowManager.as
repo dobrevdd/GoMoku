@@ -270,37 +270,48 @@ package managers
 		{
 			//var rowLevels:Array = new Array();
 			var highestLevel: int = 1;
-            if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.MAKE_1))
+            var tmpLevel:int = 0;
+
+            if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.MAKE_1) > 0)
             {
                 highestLevel = settings.MAKE_1;
             }
-			if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.BLOCK_OPPONENT_1))
+
+            tmpLevel = checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.BLOCK_OPPONENT_1);
+			if(tmpLevel > 0)
 			{
-				highestLevel = settings.BLOCK_OPPONENT_1;
+				highestLevel = tmpLevel;
 			}
+
             if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.MAKE_2))
             {
                 highestLevel = settings.MAKE_2;
             }
-			if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.BLOCK_OPPONENT_2))
+
+            tmpLevel = checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.BLOCK_OPPONENT_2);
+			if(tmpLevel > 0)
 			{
-				highestLevel = settings.BLOCK_OPPONENT_2;
+				highestLevel = tmpLevel;
 			}
             if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.MAKE_3))
             {
                 highestLevel = settings.MAKE_3;
             }
-            if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.BLOCK_OPPONENT_3))
+
+            tmpLevel = checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.BLOCK_OPPONENT_3);
+            if(tmpLevel > 0)
             {
-                highestLevel = settings.BLOCK_OPPONENT_3;
+                highestLevel = tmpLevel;
             }
             if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.MAKE_4))
             {
                 highestLevel = settings.MAKE_4;
             }
-            if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.BLOCK_OPPONENT_4))
+
+            tmpLevel = checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.BLOCK_OPPONENT_4);
+            if(tmpLevel > 0)
             {
-                highestLevel = settings.BLOCK_OPPONENT_4;
+                highestLevel = tmpLevel;
             }
             if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.MAKE_5))
             {
@@ -313,48 +324,69 @@ package managers
 		}
 		
 		//Функцията проверява дали има клетката има определен левел
-		private function checkRowLevel(rowPos:int, colPos:int, xo_cur_player:int, xo_opponent:int, level:int):Boolean
+		private function checkRowLevel(rowPos:int, colPos:int, xo_cur_player:int, xo_opponent:int, level:int):int
 		{
 
-			var applied:Boolean = false;
+			var applied:int = 0;
 			
 			switch(level) {
 
                 case settings.MAKE_1:
                     //това винаги важи
-                    applied = true;
+                    applied = 1;
                     break;
 
 				case settings.BLOCK_OPPONENT_1:
+
 					applied = checkBlockOpponent(rowPos,colPos,1,xo_opponent);
+                    if(applied > 0) {
+                        applied = 1 + applied;
+                    }
 					break;
 
                 case settings.MAKE_2:
-                    applied = checkMakeRows(rowPos,colPos,2,xo_cur_player);
+                    if(checkMakeRows(rowPos,colPos,2,xo_cur_player)) {
+                        applied = 10;
+                    }
                     break;
 
 				case settings.BLOCK_OPPONENT_2:
 					applied = checkBlockOpponent(rowPos,colPos,2,xo_opponent);
+                    if(applied > 0) {
+                        applied = 10 + applied;
+                    }
 					break;
 
                 case settings.MAKE_3:
-                    applied = checkMakeRows(rowPos,colPos,3,xo_cur_player);
+                    if(checkMakeRows(rowPos,colPos,3,xo_cur_player)) {
+                        applied = 19;
+                    }
                     break;
 
                 case settings.BLOCK_OPPONENT_3:
                     applied = checkBlockOpponent(rowPos,colPos,3,xo_opponent);
+                    if(applied > 0) {
+                        applied = 19 + applied;
+                    }
                     break;
 
                 case settings.MAKE_4:
-                    applied = checkMakeRows(rowPos,colPos,4,xo_cur_player);
+                    if(checkMakeRows(rowPos,colPos,4,xo_cur_player)) {
+                        applied = 28;
+                    }
                     break;
 
                 case settings.BLOCK_OPPONENT_4:
                     applied = checkBlockOpponent(rowPos,colPos,4,xo_opponent);
+                    if(applied > 0) {
+                        applied = 28 + applied;
+                    }
                     break;
 
                 case settings.MAKE_5:
-                    applied = checkMakeRows(rowPos,colPos,5,xo_cur_player);
+                    if(checkMakeRows(rowPos,colPos,5,xo_cur_player)) {
+                        applied = 37;
+                    }
                     break;
 			}
 			
