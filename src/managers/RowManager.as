@@ -312,7 +312,7 @@ package managers
 			return highestLevel;
 		}
 		
-		//Функцията проверява дали има клетката има определан левел
+		//Функцията проверява дали има клетката има определен левел
 		private function checkRowLevel(rowPos:int, colPos:int, xo_cur_player:int, xo_opponent:int, level:int):Boolean
 		{
 
@@ -362,7 +362,7 @@ package managers
 		}
 		
 		// Checking if we are blocking a given amount of opponents squares
-		private function checkBlockOpponent(rowPos:int,colPos:int,depth:int,xo_opponent:int):Boolean
+		private function checkBlockOpponent(rowPos:int,colPos:int,depth:int,xo_opponent:int):int
 		{
 		    var isBlocking:int = 0;
             var checkBlock:int = 0;
