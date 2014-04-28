@@ -364,26 +364,31 @@ package managers
 		// Checking if we are blocking a given amount of opponents squares
 		private function checkBlockOpponent(rowPos:int,colPos:int,depth:int,xo_opponent:int):Boolean
 		{
-		    var isBlocking:Boolean = false;
+		    var isBlocking:int = 0;
+            var checkBlock:int = 0;
 
-            if(checkVerticalBlock(rowPos,colPos,depth,xo_opponent)) {
-                trace("Block Vertical yes");
-                isBlocking = true;
+            checkBlock = checkVerticalBlock(rowPos,colPos,depth,xo_opponent);
+            if( checkBlock > 0) {
+                trace("Block Vertical ", depth, " yes----------------------------------- ",checkBlock);
+                isBlocking += checkBlock;
             }
 
-            if(checkHorizontalBlock(rowPos,colPos,depth,xo_opponent)) {
-                trace("Block Horizontal yes");
-                isBlocking = true;
+            checkBlock = checkHorizontalBlock(rowPos,colPos,depth,xo_opponent);
+            if( checkBlock > 0) {
+                trace("Block Horizontal ", depth, " yes----------------------------------- ",checkBlock);
+                isBlocking += checkBlock;
             }
 
-            if(checkDiagonalLRBlock(rowPos,colPos,depth,xo_opponent)) {
-                trace("Block Diagonal LR yes");
-                isBlocking = true;
+            checkBlock = checkDiagonalLRBlock(rowPos,colPos,depth,xo_opponent);
+            if( checkBlock > 0) {
+                trace("Block Diagonal LR ", depth, " yes----------------------------------- ",checkBlock);
+                isBlocking += checkBlock;
             }
 
-            if(checkDiagonalRLBlock(rowPos,colPos,depth,xo_opponent)) {
-                trace("Block Diagonal RL yes");
-                isBlocking = true;
+            checkBlock = checkDiagonalRLBlock(rowPos,colPos,depth,xo_opponent);
+            if( checkBlock > 0) {
+                trace("Block Diagonal RL ", depth, " yes----------------------------------- ",checkBlock);
+                isBlocking += checkBlock;
             }
 			
 			return isBlocking;
@@ -656,12 +661,12 @@ package managers
         }
 
         //checking vertically if we are blocking given amount of squares of the opponent
-        private function checkVerticalBlock(rowPos:int,colPos:int, depth:int, xo:int):Boolean
+        private function checkVerticalBlock(rowPos:int,colPos:int, depth:int, xo:int):int
         {
             //variables for start and end positions
             var rowStartPos:int;
             var rowEndPos:int;
-            var isBlocking:Boolean = false;
+            var isBlocking:int = 0;
             var foundRows:int = 0;
 
             //determining the start and end positions
@@ -672,9 +677,9 @@ package managers
 
             for(var i:int = rowStartPos; i <= rowEndPos; i++)
             {
-                if(i == rowPos) {
-                    continue;
-                }
+                //if(i == rowPos) {
+                //    continue;
+                //}
                 if(grid[i][colPos].getXO() == xo)
                 {
                     foundRows++;
@@ -686,8 +691,7 @@ package managers
 
                 if(foundRows == depth)
                 {
-                    isBlocking = true;
-                    break;
+                    isBlocking += 1;
                 }
             }
 
@@ -695,12 +699,12 @@ package managers
         }
 
         //checking horizontally if we are blocking given amount of squares of the opponent
-        private function checkHorizontalBlock(rowPos:int, colPos:int, depth:int, xo:int):Boolean
+        private function checkHorizontalBlock(rowPos:int, colPos:int, depth:int, xo:int):int
         {
             //variables for start and end positions
             var colStartPos:int;
             var colEndPos:int;
-            var isBlocking:Boolean = false;
+            var isBlocking:int = 0;
             var foundRows:int = 0;
 
             //determining the start and end positions
@@ -711,9 +715,9 @@ package managers
 
             for(var i:int = colStartPos; i <= colEndPos; i++)
             {
-                if(i == colPos) {
-                    continue;
-                }
+                //if(i == colPos) {
+                //    continue;
+                //}
                 if(grid[rowPos][i].getXO() == xo)
                 {
                     foundRows++;
@@ -725,8 +729,7 @@ package managers
 
                 if(foundRows == depth)
                 {
-                    isBlocking = true;
-                    break;
+                    isBlocking += 1;
                 }
             }
 
@@ -734,14 +737,14 @@ package managers
         }
 
         //checking in diagonal Left To Right if we are blocking given amount of squares of the opponent
-        private function checkDiagonalLRBlock(rowPos:int, colPos:int, depth:int, xo:int):Boolean
+        private function checkDiagonalLRBlock(rowPos:int, colPos:int, depth:int, xo:int):int
         {
             //variables for the start and end positions
             var colStartPos:int;
             var colEndPos:int;
             var rowStartPos:int;
             var rowEndPos:int;
-            var isBlocking:Boolean = false;
+            var isBlocking:int = 0;
             var foundRows:int = 0;
 
             //determining the start and end positions
@@ -786,9 +789,9 @@ package managers
 
             for(var i:int=rowStartPos, j:int=colStartPos; i<=rowEndPos && j<=colEndPos; i++, j++)
             {
-                if(i == rowPos && j == colPos) {
-                    continue;
-                }
+                //if(i == rowPos && j == colPos) {
+                //    continue;
+                //}
                 if(grid[i][j].getXO() == xo)
                 {
                     foundRows++;
@@ -800,15 +803,14 @@ package managers
 
                 if(foundRows == depth)
                 {
-                    isBlocking = true;
-                    break;
+                    isBlocking += 1;
                 }
             }
             return isBlocking;
         }
 
         //checking in diagonal Right To Left if we are blocking given amount of squares of the opponent
-        private function checkDiagonalRLBlock(rowPos:int, colPos:int, depth:int, xo:int):Boolean
+        private function checkDiagonalRLBlock(rowPos:int, colPos:int, depth:int, xo:int):int
         {
             //variables for the start and end positions
             var colStartPos:int;
@@ -817,7 +819,7 @@ package managers
             var rowEndPos:int;
             var marginRow:int;
             var marginCol:int;
-            var isBlocking:Boolean = false;
+            var isBlocking:int = 0;
             var foundRows:int = 0;
 
             //determining the start and end positions
@@ -872,9 +874,9 @@ package managers
 
             for(var i:int=rowStartPos, j:int=colStartPos; i<=rowEndPos && j>=colEndPos; i++, j--)
             {
-                if(i == rowPos && j == colPos) {
-                    continue;
-                }
+                //if(i == rowPos && j == colPos) {
+                //    continue;
+                //}
                 if(grid[i][j].getXO() == xo)
                 {
                     foundRows++;
@@ -886,8 +888,7 @@ package managers
 
                 if(foundRows == depth)
                 {
-                    isBlocking = true;
-                    break;
+                    isBlocking += 1;
                 }
             }
             return isBlocking;
