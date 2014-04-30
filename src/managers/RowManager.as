@@ -379,13 +379,13 @@ package managers
                 case settings.BLOCK_OPPONENT_4:
                     applied = checkBlockOpponent(rowPos,colPos,4,xo_opponent);
                     if(applied > 0) {
-                        applied = 28 + applied;
+                        applied = (settings.BLOCK_OPPONENT_4 - 1) + applied;
                     }
                     break;
 
                 case settings.MAKE_5:
                     if(checkMakeRows(rowPos,colPos,5,xo_cur_player)) {
-                        applied = 37;
+                        applied = settings.MAKE_5;
                     }
                     break;
 			}

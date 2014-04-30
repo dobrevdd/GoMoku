@@ -33,7 +33,17 @@ package core
         7 - b1:6                    25 - b3:6
         8 - b1:7                    26 - b3:7
         9 - b1:8                    27 - b3:8
+
         10 - make 2                 28 - make 4
+        11 - make 2, b1:1
+        12 - make 2, b1:2
+        13 - make 2, b1:3
+        14 - make 2, b1:4
+        15 - make 2, b1:5
+        16 - make 2, b1:6
+        17 - make 2, b1:7
+        18 - make 2, b1:8
+
         11 - b2:1                   29 - b4:1
         12 - b2:2                   30 - b4:2
         13 - b2:3                   31 - b4:3
@@ -49,11 +59,17 @@ package core
         public static const MAKE_1:int = 1;
 		public static const BLOCK_OPPONENT_1:int = 2;
         public static const MAKE_2:int = 10;
-        public static const BLOCK_OPPONENT_2:int = 11;
-        public static const MAKE_3:int = 19;
-        public static const BLOCK_OPPONENT_3:int = 20;
-        public static const MAKE_4:int = 28;
-		public static const BLOCK_OPPONENT_4:int = 29;
-		public static const MAKE_5:int = 37;
+        public static const MAKE_2_BLOCK_1 = 11;
+        public static const BLOCK_OPPONENT_2:int = 19;
+        public static const MAKE_3:int = 27;
+        public static const MAKE_3_BLOCK_1:int = 28;
+        public static const MAKE_3_BLOCK_2:int = 36;
+        public static const BLOCK_OPPONENT_3:int = 44;
+        public static const MAKE_4:int = 52;
+        public static const MAKE_4_BLOCK_1:int = 53;
+        public static const MAKE_4_BLOCK_2:int = 61;
+        public static const MAKE_4_BLOCK_3:int = 69;
+		public static const BLOCK_OPPONENT_4:int = 77;
+		public static const MAKE_5:int = 85;
 	}
 }
