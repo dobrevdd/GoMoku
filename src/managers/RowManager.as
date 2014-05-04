@@ -270,9 +270,103 @@ package managers
 		{
 			//var rowLevels:Array = new Array();
 			var highestLevel: int = 1;
-            var tmpLevel:int = 0;
+            //var tmpLevel:int = 0;
+            var b1,b2,b3,b4:int;
+            var m2,m3,m4,m5:Boolean;
 
-            if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.MAKE_1) > 0)
+            b1 = checkBlockOpponent(rowPos,colPos,1,xo_opponent);
+            b2 = checkBlockOpponent(rowPos,colPos,2,xo_opponent);
+            b3 = checkBlockOpponent(rowPos,colPos,3,xo_opponent);
+            b4 = checkBlockOpponent(rowPos,colPos,4,xo_opponent);
+
+            m2 = checkMakeRows(rowPos,colPos,2,xo_cur_player);
+            m3 = checkMakeRows(rowPos,colPos,3,xo_cur_player);
+            m4 = checkMakeRows(rowPos,colPos,4,xo_cur_player);
+            m5 = checkMakeRows(rowPos,colPos,5,xo_cur_player);
+
+            //BLOCK 1
+            if(b1 >0) {
+                highestLevel = settings.BLOCK_1 + (b1 - 1);
+            }
+
+            //MAKE 2
+            if(m2)
+            {
+                highestLevel = settings.MAKE_2;
+                if(b1 > 0) {
+                    highestLevel = settings.MAKE_2 + b1;
+                }
+            }
+
+            //BLOCK 2
+            if(b2 > 0) {
+                highestLevel = settings.BLOCK_2 + (b2 - 1);
+                if(m2) {
+                    highestLevel = settings.BLOCK_2_MAKE_2;
+                }
+            }
+
+            //MAKE 3
+            if(m3)
+            {
+                highestLevel = settings.MAKE_3;
+                if(b1 > 0) {
+                    highestLevel = settings.MAKE_3_BLOCK_1 + (b1 - 1);
+                }
+                if(b2 > 0) {
+                    highestLevel = settings.MAKE_3_BLOCK_2 + (b2 - 1);
+                }
+            }
+
+            //BLOCK 3
+            if(b3 > 0) {
+                highestLevel = settings.BLOCK_3 + (b3 - 1);
+                if(m2) {
+                    highestLevel = settings.BLOCK_3_MAKE_2;
+                }
+                if(m3) {
+                    highestLevel = settings.BLOCK_3_MAKE_3;
+                }
+            }
+
+            //MAKE 4
+            if(m4)
+            {
+                highestLevel = settings.MAKE_4;
+                if(b1 > 0) {
+                    highestLevel = settings.MAKE_4_BLOCK_1 + (b1 - 1);
+                }
+                if(b2 > 0) {
+                    highestLevel = settings.MAKE_4_BLOCK_2 + (b2 - 1);
+                }
+                if(b3 > 0) {
+                    highestLevel = settings.MAKE_4_BLOCK_3 + (b3 - 1);
+                }
+            }
+
+            //BLOCK 4
+            if(b4 > 0) {
+                highestLevel = settings.BLOCK_4 + (b4 - 1);
+                if(m2) {
+                    highestLevel = settings.BLOCK_4_MAKE_2;
+                }
+                if(m3) {
+                    highestLevel = settings.BLOCK_4_MAKE_3;
+                }
+                if(m4) {
+                    highestLevel = settings.BLOCK_4_MAKE_4;
+                }
+            }
+
+            //MAKE 5
+            if(m5)
+            {
+                highestLevel = settings.MAKE_5;
+            }
+
+
+
+            /*if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.MAKE_1) > 0)
             {
                 highestLevel = settings.MAKE_1;
             }
@@ -316,7 +410,7 @@ package managers
             if(checkRowLevel(rowPos, colPos, xo_cur_player, xo_opponent, settings.MAKE_5))
             {
                 highestLevel = settings.MAKE_5;
-            }
+            }*/
             //trace(checkBlockOpponent(rowPos,colPos,2,xo_opponent));
             //trace(checkMakeRows(rowPos,colPos,2,xo_cur_player));
 			
@@ -324,7 +418,7 @@ package managers
 		}
 		
 		//Функцията проверява дали има клетката има определен левел
-		private function checkRowLevel(rowPos:int, colPos:int, xo_cur_player:int, xo_opponent:int, level:int):int
+		/*private function checkRowLevel(rowPos:int, colPos:int, xo_cur_player:int, xo_opponent:int, level:int):int
 		{
 
 			var applied:int = 0;
@@ -346,7 +440,7 @@ package managers
 
                 case settings.MAKE_2:
                     if(checkMakeRows(rowPos,colPos,2,xo_cur_player)) {
-                        applied = 10;
+                        applied = settings.MAKE_2;
                     }
                     break;
 
@@ -391,7 +485,7 @@ package managers
 			}
 			
 			return applied;
-		}
+		}*/
 		
 		// Checking if we are blocking a given amount of opponents squares
 		private function checkBlockOpponent(rowPos:int,colPos:int,depth:int,xo_opponent:int):int

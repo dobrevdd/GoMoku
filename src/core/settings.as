@@ -57,19 +57,25 @@ package core
          */
 
         public static const MAKE_1:int = 1;
-		public static const BLOCK_OPPONENT_1:int = 2;
+		public static const BLOCK_1:int = 2;
         public static const MAKE_2:int = 10;
         public static const MAKE_2_BLOCK_1 = 11;
-        public static const BLOCK_OPPONENT_2:int = 19;
-        public static const MAKE_3:int = 27;
-        public static const MAKE_3_BLOCK_1:int = 28;
-        public static const MAKE_3_BLOCK_2:int = 36;
-        public static const BLOCK_OPPONENT_3:int = 44;
-        public static const MAKE_4:int = 52;
-        public static const MAKE_4_BLOCK_1:int = 53;
-        public static const MAKE_4_BLOCK_2:int = 61;
-        public static const MAKE_4_BLOCK_3:int = 69;
-		public static const BLOCK_OPPONENT_4:int = 77;
-		public static const MAKE_5:int = 85;
+        public static const BLOCK_2:int = 19;
+        public static const BLOCK_2_MAKE_2 = 27;
+        public static const MAKE_3:int = 28;
+        public static const MAKE_3_BLOCK_1:int = 29;
+        public static const MAKE_3_BLOCK_2:int = 37;
+        public static const BLOCK_3:int = 45;
+        public static const BLOCK_3_MAKE_2 = 53;
+        public static const BLOCK_3_MAKE_3 = 54;
+        public static const MAKE_4:int = 55;
+        public static const MAKE_4_BLOCK_1:int = 56;
+        public static const MAKE_4_BLOCK_2:int = 64;
+        public static const MAKE_4_BLOCK_3:int = 72;
+		public static const BLOCK_4:int = 80;
+        public static const BLOCK_4_MAKE_2:int = 88;
+        public static const BLOCK_4_MAKE_3:int = 89;
+        public static const BLOCK_4_MAKE_4:int = 90;
+		public static const MAKE_5:int = 91;
 	}
 }
